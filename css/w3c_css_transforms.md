@@ -10,7 +10,7 @@
 ---------
 ### 5. 二维子集（Two Dimensional Subset）
 用户浏览器（UAs）可能不总能渲染出三维变换，那么它们就只能支持该规范的一个二维子集。在这种情况下，三维变换和**transform-style、perspective、perspective-origin**以及**backface-visibility**属性将不被支持。三维相关的变换渲染也不会起作用。
-> 对于二维变换情况，矩阵分解采用**Graphics Gems II（Jim Arvo著）**书中**unmatrix**算法的二维简化版本。下面是一个二维的3x3变换矩阵，其中6个参数a~f，分别对应二维变换函数**matrix()**的6个参数。
+> 对于二维变换情况，矩阵分解采用**Graphics Gems II（Jim Arvo著）**书中**[unmatrix](https://github.com/erich666/GraphicsGems/blob/master/gemsii/unmatrix.c)**算法的二维简化版本。下面是一个二维的3x3变换矩阵，其中6个参数a~f，分别对应二维变换函数**matrix()**的6个参数。
 ><center>![二维变换的3x3矩阵](https://www.w3.org/TR/css-transforms-1/3x3matrix.png)</center>
 ><center>二维变换3x3矩阵</center>
 >开发者可以很简单的为不支持三维变换的浏览器提供备选变换方案。下面的例子中，**transform**属性有两次赋值定义。第一次定义包括了两个二维变换函数，第二次定义包括一个二维变换和一个三维变换。
@@ -136,4 +136,4 @@
 >
 > **[示例4](http://codepen.io/llwanghong/pen/mPXgNj)**
 
-具体的decomposing和recomposing矩阵的算法，见Graphics Gems II。
+具体的decomposing和recomposing矩阵的算法，见[Graphics Gems II](http://www.amazon.com/Graphics-Gems-II-IBM-No/dp/0120644819)。
