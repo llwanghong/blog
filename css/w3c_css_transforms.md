@@ -3,7 +3,7 @@
 
 ###### 译者：Hong Wang (<llwanghong@gmail.com>)
 ---------
-**CSS Transforms**可以对一个的元素进行二维平面或三维空间的变换，如translate, rotate, scale和skew等变换。
+**CSS Transforms**可以对一个元素进行二维平面或三维空间的变换，如translate, rotate, scale和skew等变换。
 
 下面是对W3C官网CSS Transforms模块的部分摘译，为了理解的连贯性，调整了W3C规范中相关章节的顺序。
 
@@ -35,7 +35,9 @@
 3. 从左至右依次乘以**'transform'**属性中指定的各个变换函数
 4. 最后再按照**'transform-origin'**属性的X，Y，Z 值的负值进行位移
 
->注意，变换只是影响了元素的显示，不影响元素自身CSS的布局。意味着变化不会影响**getClientRects()**及**getBoundingClientRect()**的值。
+>注意，变换只是影响了元素的显示，不影响元素自身CSS的布局。意味着变化不会影响**getClientRects()**及**getBoundingClientRect()**的值。对于基于CSS盒模型布局定位的元素，如果该元素的**transform**属性为**非none**，则该元素将成为其所有fixed定位的后代元素的**包含块（Containing Block）**。
+>
+> **[示例1](http://codepen.io/llwanghong/pen/yOvrOZ?editors=1111)，[示例2](http://codepen.io/llwanghong/pen/wGyZxQ?editors=1111)，[示例3](http://codepen.io/llwanghong/pen/YqeMBY)**
 
 ### 18. 变换函数的元和派生（Transform function primitives and derivatives）
 一些变换函数的效果可以通过更具体的变化函数来实现，比如translate的一些操作可以translateX来实现。此时可以称translate为元变换，translateX为派生变换。
@@ -131,5 +133,7 @@
 > ```
 >初始变换**‘rotate(45deg)’**和目标变换***'translate(100px, 100px) rotate(1125deg)'*完全不同，按照***变换的插值*** 最后一条规则，两个变换都需要进行矩阵的插值计算。但需要注意，将变换转化为矩阵的过程中，旋转3圈的信息将会丢失掉，所以最终看到的效果只顺时针旋转了半圈（90度）。
 >为了达到期望的效果，只需要更新上述变换的写法，使前后两个变换满足***变换的插值*** 的第三条规则。初始变换改为**‘translate(0, 0) rotate(45deg)’**，此时就会进行数值的插值计算，从而不会丢失旋转信息，达到期望的效果。
+>
+> **[示例4](http://codepen.io/llwanghong/pen/mPXgNj)**
 
 具体的decomposing和recomposing矩阵的算法，见Graphics Gems II。
