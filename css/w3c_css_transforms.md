@@ -10,12 +10,9 @@
 ---------
 ### 5. 二维子集（Two Dimensional Subset）
 用户浏览器（UAs）可能不总能渲染出三维变换，那么它们就只能支持该规范的一个二维子集。在这种情况下，三维变换和**transform-style、perspective、perspective-origin**以及**backface-visibility**属性将不被支持。三维相关的变换渲染也不会起作用。
-> 对于二维变换情况，矩阵分解采用**Graphics Gems II（Jim Arvo著）**书中**[unmatrix](https://github.com/erich666/GraphicsGems/blob/master/gemsii/unmatrix.c)**算法的二维简化版本。下面是一个二维的3x3变换矩阵，其中6个参数a~f，分别对应二维变换函数**matrix()**的6个参数。
->
->![二维变换的3x3矩阵](https://www.w3.org/TR/css-transforms-1/3x3matrix.png)
->
->图1 二维变换3x3矩阵
->
+> 对于二维变换情况，矩阵分解采用**Graphics Gems II（Jim Arvo著）**书中**[unmatrix](https://github.com/erich666/GraphicsGems/blob/master/gemsii/unmatrix.c)**算法的二维简化版本。下面是一个二维的3x3变换矩阵，其中6个参数a~f，分别对应二维变换函数**matrix(a, b, c, d, e, f)**的6个参数。
+><center>![二维变换的3x3矩阵](https://www.w3.org/TR/css-transforms-1/3x3matrix.png)</center>
+><center>二维变换3x3矩阵</center>
 >开发者可以很简单的为不支持三维变换的浏览器提供备选变换方案。下面的例子中，**transform**属性有两次赋值定义。第一次定义包括了两个二维变换函数，第二次定义包括一个二维变换和一个三维变换。
 > ```css
 > div {
@@ -24,15 +21,15 @@
 > }
 > ```
 > 当浏览器支持三维变换时，第二次属性定义将覆盖第一次的定义，当不支持三维变换时，第二次定义将会失效，浏览器会使用第一种定义。
+> 
+> [常见的变换矩阵以及计算示例](http://www.useragentman.com/blog/2011/01/07/css3-matrix-transform-for-the-mathematically-challenged/)
 
 ### 6. 变换渲染模型（The Transform Rendering Model）
 当为元素的**transform**属性指定了一个非**none**属性值时，就会在该元素上建立了一个**本地坐标系（local coordinate system）**。从元素最初始的渲染（未指定**transform**属性值）到**本地坐标系**的映射由该元素的**变换矩阵（transformation matrix）**给定。变换是可累积的，也就是说，元素是在它们祖先的坐标系中建立自己的**本地坐标系**。从用户的角度来看，就是一个元素会累积应用所有它祖先**‘transform’**属性设置的变换，以及自身**"transform"**属性设置的变换，规范中将这些变换的累积称为元素**当前变换矩阵（current transformation matrix, CTM）**。
 
 坐标空间是一个有两个轴的坐标系：X轴是水平向右增加，Y轴是垂直向下增加。三维变换函数将这个坐标空间扩展到三维，增加了垂直于屏幕平面一个Z轴，并且指向观察者。
-
->![初始坐标空间示例](https://www.w3.org/TR/css-transforms-1/coordinates.svg)
->
-> 图2 初始坐标空间示例
+<center>![初始坐标空间示例](https://www.w3.org/TR/css-transforms-1/coordinates.svg)</center>
+<center>初始坐标空间示例</center>
 
 变换矩阵是基于**'transform'**和**'transform-origin'**属性，按照以下步骤计算而来：
 1. 从单位矩阵开始
@@ -45,7 +42,7 @@
 > **[示例1](http://codepen.io/llwanghong/pen/yOvrOZ?editors=1111)，[示例2](http://codepen.io/llwanghong/pen/wGyZxQ?editors=1111)，[示例3](http://codepen.io/llwanghong/pen/YqeMBY)**
 
 ### 18. 变换函数的元和派生（Transform function primitives and derivatives）
-一些变换函数的效果可以通过更具体的变化函数来实现，比如translate的一些操作可以translateX来实现。此时可以称translate为元变换，translateX为派生变换。
+transform中一些变换函数的效果可以通过更具体的变换函数来实现，比如translate的一些操作可以用translateX来实现。此时称translate为元变换，translateX为派生变换。
 下面列出了所有二维和三维的元变换以及相应的派生变换。
 ####二维元变换以及相应的派生变换
 
@@ -63,14 +60,14 @@
 |scale3d()|scaleX(), scaleY(), scaleZ(), scale()|
 |rotate3d()|rotate(), roateX(), rotateY(), rotateZ()|
 
->对于同时具有二维和三维元变换的派生变换，使用二维元变换，或者三维的元变换，是由上下文环境来决定。
+>对于同时具有二维和三维元变换的派生变换，具体是使用二维元变换或三维的元变换，是由上下文环境来决定。
 
 ### 19. 元变换函数和派生变换函数的插值（Interpolation of primitives and derived transform functions）
 两个具有相同数量参数的变换函数，会直接进行数值的插值计算，而不需要转换为相同的元变换。插值计算的结果即是带有相同参数的相同变换。对于**rotate3d(), matrix(), matrix3d(), perspective()**有特殊的插值计算规则。
->例如，对于变换函数**translate(0)**和**translate(100px)**，就是两个具有相同数量参数的相同变换，所以它们只会进行树枝上的插值计算。但是对于变换函数**translateX(100px)**和**translate(100px, 0)**，虽然是相同的变换，但是使用的参数数量不同，所以它们就都需要先转换为元变换，然后才能进行数值插值计算。
+>例如，对于变换函数**translate(0)**和**translate(100px)**，就是两个具有相同数量参数的相同变换，所以它们会直接进行数值上的插值计算。但是对于变换函数**translateX(100px)**和**translate(100px, 0)**，虽然是相同的变换，但是使用的参数数量不同，所以它们就需要先转换为元变换函数，然后才能进行数值上的插值计算。
 
-两个不同的变换，但都是从相同的元变换派生出来的（即相同的派生变换），或者相同的变换，但使用了不同数量的参数，此时两个变换可以进行数值插值计算。此时需要先将两种变换转换为相同的元变换，然后才能进行数值插值计算。插值计算的结果相当于使用了相同数量参数的相同元变换。
->下面的例子，当div发生鼠标hover事件时，会发生从**translateX(100px)**到**translateY(100px)**的3秒过渡变换。此时两个变换都是从相同的元变换translate()派生的，所以需要先进行插值计算。
+两个不同的变换，但都是从相同的元变换派生出来的（即相同的派生变换），或者相同的变换，但使用了不同数量的参数，此时两个变换可以进行数值插值计算。需要先将两种变换转换为相同的元变换，然后才能进行数值插值计算。插值计算的结果相当于使用了相同数量参数的相同元变换。
+>下面的例子，当div发生鼠标hover事件时，会发生从**translateX(100px)**到**translateY(100px)**的3秒过渡变换。此时两个变换都是从相同的元变换translate()派生的，所以需要先将两个变换转换为**translate()**元变换，然后才能进行数值插值计算。
 > ``` css
 > div {
 >   transform: translateX(100px);
@@ -83,8 +80,8 @@
 > ```
 >当发生3秒的transition时，**translateX(100px)**将会转化为**translate(100px, 0)**，**translateY(100px)**会转化为**translate(0, 100px)**，然后两个变换才能进行数值的插值计算。
 
-如果两个变换都可以一个二维元变换派生，则都会转换为二维元变换。如果其中一个是或者都是三维变换，则都会转换为三维元变换。
->下面的例子中，一个二维变换函数经过3秒过渡变换到三维变换函数。两个变换函数的公共元变换为**translate3d()**。会发生从**translateX(100px)**到**translateY(100px)**的3s过渡变换。此时两个变换都是从相同的元变换translate()派生的，所以需要先进行插值计算。
+如果两个变换都可以从同一个二维元变换派生，则都会转换为二维元变换。如果其中一个是或者都是三维变换，则会都转换为三维元变换。
+>下面的例子中，一个二维变换函数经过3秒过渡变换到三维变换函数。两个变换函数的公共元变换为**translate3d()**。
 > ``` css
 > div {
 >   transform: translateX(100px);
@@ -98,17 +95,17 @@
 >当发生3s的transition时，**translateX(100px)**会转化为**translate3d(100px, 0, 0)**，**translateZ(100px)**会转化为**translate3d(0, 0, 100px)**，然后两个变换才能进行数值的插值计算。
 
 对于**matrix(), matrix3d(), perspective()**三种变换将会首先被转化为4x4的矩阵，然后进行矩阵的插值计算。
-对于**rotate3d()**的插值计算，首先会得到两个变换的单位方向向量，如果相等，则可以直接进行数值的插值；否则，就需要先将两种变换转化为4x4的矩阵，然后对矩阵进行插值计算。
+对于**rotate3d()**的插值计算，首先会得到两个变换的单位方向向量，如果相等，则可以直接进行数值的插值计算；否则，就需要先将两种变换转化为4x4的矩阵，然后对矩阵进行插值计算。
 
 ### 17. 变换的插值（Interpolation of Transforms）
 
-当进行过渡类型的变换时（比如对transforms施加transition属性），就需要对变换函数进行插值计算。从一个初始的变换（from-transform）一个结束的变换（to-transform）如何进行插值计算需要遵循下面的规则。
+当变换函数之间发生过渡时（比如对transforms施加transition属性），就需要对变换函数进行插值计算。从一个初始的变换（from-transform）到一个结束的变换（to-transform），如何进行插值计算需要遵循下面的规则。
 #### I. 当from-transform和to-transform的值都为none
 此时没有必要进行计算，保持原值。
 
 #### ||. 当from-transform和to-transform中有一个的值为none
 值为**none**的那个将被替换为**恒等变化（Identity Transform functions）**，然后继续按照下面的规则进行插值计算。
->  **恒等变化（Identity Transform functions）** 就是标准里给出的一系列特殊的变换函数，类似线性代数里面的单位矩阵（Identity Matrix），无论怎么施加多少次变换，都不会改变原有的变换，标准里面给出的有**translate(0)、translate3d(0, 0, 0)、translateX(0)、translateY(0)、translateZ(0)、scale(1)、scaleX(1)、scaleY(1)、scaleZ(1)、rotate(0)、rotate3d(1, 1, 1, 0)、rotateX(0)、rotateY(0)、rotateZ(0)、skew(0, 0)、skewX(0)、skewY(0)、matrix(1, 0, 0, 1, 0, 0)**和**matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)**。一种特殊的情况是**透视(perspective): perspective(infinity)**，此时**M34**的值变得无穷小，因此假定它等于单位矩阵。
+>  **恒等变换（Identity Transform functions）** 就是标准里给出的一系列特殊的变换函数，类似线性代数里面的单位矩阵（Identity Matrix），无论怎么施加多少次变换，都不会改变原有的变换，标准里面给出的恒等变换有**translate(0)、translate3d(0, 0, 0)、translateX(0)、translateY(0)、translateZ(0)、scale(1)、scaleX(1)、scaleY(1)、scaleZ(1)、rotate(0)、rotate3d(1, 1, 1, 0)、rotateX(0)、rotateY(0)、rotateZ(0)、skew(0, 0)、skewX(0)、skewY(0)、matrix(1, 0, 0, 1, 0, 0)**和**matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)**。一种特殊的情况是**透视(perspective): perspective(infinity)**，此时**M34**的值变得无穷小，因此假定它等于单位矩阵。
 >
 > 例如，**from-transform**为**scale(2)**，**to-transform**为**none**， 则**none**将会被替换为**scale(1)**，然后继续按照下面的规则进行插值。类似的，如果**from-transform**为**none**，**to-transform**为**scale(2) rotate(50deg)**，则**from-transform**会被替换为**scale(1) rotate(0)**。
 
