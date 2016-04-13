@@ -11,8 +11,11 @@
 ### 5. 二维子集（Two Dimensional Subset）
 用户浏览器（UAs）可能不总能渲染出三维变换，那么它们就只能支持该规范的一个二维子集。在这种情况下，三维变换和**transform-style、perspective、perspective-origin**以及**backface-visibility**属性将不被支持。三维相关的变换渲染也不会起作用。
 > 对于二维变换情况，矩阵分解采用**Graphics Gems II（Jim Arvo著）**书中**[unmatrix](https://github.com/erich666/GraphicsGems/blob/master/gemsii/unmatrix.c)**算法的二维简化版本。下面是一个二维的3x3变换矩阵，其中6个参数a~f，分别对应二维变换函数**matrix()**的6个参数。
-><center>![二维变换的3x3矩阵](https://www.w3.org/TR/css-transforms-1/3x3matrix.png)</center>
-><center>二维变换3x3矩阵</center>
+>
+>![二维变换的3x3矩阵](https://www.w3.org/TR/css-transforms-1/3x3matrix.png)
+>
+>图1 二维变换3x3矩阵
+>
 >开发者可以很简单的为不支持三维变换的浏览器提供备选变换方案。下面的例子中，**transform**属性有两次赋值定义。第一次定义包括了两个二维变换函数，第二次定义包括一个二维变换和一个三维变换。
 > ```css
 > div {
@@ -26,8 +29,10 @@
 当为元素的**transform**属性指定了一个非**none**属性值时，就会在该元素上建立了一个**本地坐标系（local coordinate system）**。从元素最初始的渲染（未指定**transform**属性值）到**本地坐标系**的映射由该元素的**变换矩阵（transformation matrix）**给定。变换是可累积的，也就是说，元素是在它们祖先的坐标系中建立自己的**本地坐标系**。从用户的角度来看，就是一个元素会累积应用所有它祖先**‘transform’**属性设置的变换，以及自身**"transform"**属性设置的变换，规范中将这些变换的累积称为元素**当前变换矩阵（current transformation matrix, CTM）**。
 
 坐标空间是一个有两个轴的坐标系：X轴是水平向右增加，Y轴是垂直向下增加。三维变换函数将这个坐标空间扩展到三维，增加了垂直于屏幕平面一个Z轴，并且指向观察者。
-<center>![初始坐标空间示例](https://www.w3.org/TR/css-transforms-1/coordinates.svg)</center>
-<center>初始坐标空间示例</center>
+
+>![初始坐标空间示例](https://www.w3.org/TR/css-transforms-1/coordinates.svg)
+>
+> 图2 初始坐标空间示例
 
 变换矩阵是基于**'transform'**和**'transform-origin'**属性，按照以下步骤计算而来：
 1. 从单位矩阵开始
