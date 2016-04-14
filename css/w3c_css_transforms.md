@@ -47,7 +47,8 @@
 > **[示例1](http://codepen.io/llwanghong/pen/yOvrOZ?editors=1111)，[示例2](http://codepen.io/llwanghong/pen/wGyZxQ?editors=1111)，[示例3](http://codepen.io/llwanghong/pen/YqeMBY)**
 
 ### 18. 变换函数的元和派生（Transform function primitives and derivatives）
-transform中一些变换函数的效果可以通过更具体的变换函数来实现，比如translate的一些操作可以用translateX来实现。此时称translate为元变换，translateX为派生变换。
+transform中一些变换函数的效果可以通过更具体的变换函数来实现，比如translate的一些操作可以用translateX来实现。此时称translate为**元变换**，translateX为**派生变换**。
+
 下面列出了所有二维和三维的元变换以及相应的派生变换。
 ####二维元变换以及相应的派生变换
 
@@ -69,7 +70,7 @@ transform中一些变换函数的效果可以通过更具体的变换函数来�
 
 ### 19. 元变换函数和派生变换函数的插值（Interpolation of primitives and derived transform functions）
 两个具有相同数量参数的变换函数，会直接进行数值的插值计算，而不需要转换为相同的元变换。插值计算的结果即是带有相同参数的相同变换。对于**rotate3d(), matrix(), matrix3d(), perspective()**有特殊的插值计算规则。
->例如，对于变换函数**translate(0)**和**translate(100px)**，就是两个具有相同数量参数的相同变换，所以它们会直接进行数值上的插值计算。但是对于变换函数**translateX(100px)**和**translate(100px, 0)**，虽然是相同的变换，但是使用的参数数量不同，所以它们就需要先转换为元变换函数，然后才能进行数值上的插值计算。
+>例如，对于变换函数**translate(0)**和**translate(100px)**，就是两个具有相同数量参数的相同变换，所以它们会直接进行数值上的插值计算。但是对于变换函数**translateX(100px)**和**translate(100px, 0)**，两个变换既不是相同的变换，使用的参数数量也不同，所以它们就需要先转换为元变换函数，然后才能进行数值上的插值计算。
 
 两个不同的变换，但都是从相同的元变换派生出来的（即相同的派生变换），或者相同的变换，但使用了不同数量的参数，此时两个变换可以进行数值插值计算。需要先将两种变换转换为相同的元变换，然后才能进行数值插值计算。插值计算的结果相当于使用了相同数量参数的相同元变换。
 >下面的例子，当div发生鼠标hover事件时，会发生从**translateX(100px)**到**translateY(100px)**的3秒过渡变换。此时两个变换都是从相同的元变换translate()派生的，所以需要先将两个变换转换为**translate()**元变换，然后才能进行数值插值计算。
@@ -104,7 +105,7 @@ transform中一些变换函数的效果可以通过更具体的变换函数来�
 
 ### 17. 变换的插值（Interpolation of Transforms）
 
-当变换函数之间发生过渡时（比如对transforms施加transition属性），就需要对变换函数进行插值计算。从一个初始的变换（from-transform）到一个结束的变换（to-transform），如何进行插值计算需要遵循下面的规则。
+当变换函数之间发生过渡时（比如对transforms施加transition属性），就需要对变换函数进行插值计算。从一个初始的变换（**from-transform**）到一个结束的变换（**to-transform**），如何进行插值计算需要遵循下面的规则。
 #### I. 当from-transform和to-transform的值都为none
 此时没有必要进行计算，保持原值。
 
