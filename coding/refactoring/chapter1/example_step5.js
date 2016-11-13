@@ -113,9 +113,7 @@ var Customer = function (name) {
     };
 
     this.statement = function () {
-        var totalAmount = 0,
-            frequentRenterPoints = 0,
-            result = "Rental Record for " + this.getName() + "\n";
+        var result = "Rental Record for " + this.getName() + "\n";
 
         _rentals.forEach(function (each, index) {
 
