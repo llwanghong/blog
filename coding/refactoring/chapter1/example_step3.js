@@ -110,7 +110,7 @@ var Customer = function (name) {
         _rentals.forEach(function (each, index) {
             var thisAmount =0;
 
-            thisAmount = this.amountFor(each);
+            thisAmount = each.getCharge();
 
             // add frequent renter points
             frequentRenterPoints++;
@@ -133,9 +133,5 @@ var Customer = function (name) {
         result += "You earned " + frequentRenterPoints + " frequent renter points";
 
         return result;
-    };
-
-    this.amountFor = function (aRental) {
-	return aRental.getCharge();
     };
 };
