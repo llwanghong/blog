@@ -84,11 +84,11 @@ var Rental = function (movie, daysRented) {
 
     this.getFrequentRenterPoints = function () {
         if ((this.getMovie().getPriceCode() == Movie.NEW_RELEASES)
-	    && this.getDaysRented() > 1) {
+            && this.getDaysRented() > 1) {
             return 2;
         } else {
-	    return 1;
-	}
+            return 1;
+        }
     };
 };
 
