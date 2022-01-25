@@ -1,8 +1,8 @@
 ## [W3C CSS Transforms](www.w3.org/TR/css-transforms-1)
 
-### Top Of Contents
-- [二维子集](#二维子集)
-- [变换渲染模型](#变换渲染模型)
+### 目录
+* [二维子集](#二维子集)
+* [变换渲染模型](#变换渲染模型)
 
 ###### 译者：Hong Wang (<llwanghong@gmail.com>)
 ---------
