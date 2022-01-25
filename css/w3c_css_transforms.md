@@ -1,5 +1,8 @@
 ## [W3C CSS Transforms](www.w3.org/TR/css-transforms-1)
 
+### Top Of Contents
+- [5. 二维子集](#二维子集)
+- [6. 变换渲染模型](#变换渲染模型)
 
 ###### 译者：Hong Wang (<llwanghong@gmail.com>)
 ---------
@@ -12,7 +15,7 @@
 用户浏览器（UAs）可能不总能渲染出三维变换，那么它们就只能支持该规范的一个二维子集。在这种情况下，三维变换和**transform-style、perspective、perspective-origin**以及**backface-visibility**属性将不被支持。三维相关的变换渲染也不会起作用。
 > 对于二维变换情况，矩阵分解采用**Graphics Gems II（Jim Arvo著）**书中**[unmatrix](https://github.com/erich666/GraphicsGems/blob/master/gemsii/unmatrix.c)**算法的二维简化版本。下面是一个二维的3x3变换矩阵，其中6个参数a~f，分别对应二维变换函数**matrix(a, b, c, d, e, f)**的6个参数。
 > 
->![二维变换的3x3矩阵](https://www.w3.org/TR/css-transforms-1/3x3matrix.png)
+>![二维变换的3x3矩阵](https://www.w3.org/TR/css-transforms-1/images/matrix.png)
 >
 >图1 二维变换3x3矩阵
 >
